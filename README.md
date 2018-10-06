@@ -1,9 +1,12 @@
-# sapper-template
+# sapper-template -- pug [jade] templating edition
 
-The default [Sapper](https://github.com/sveltejs/sapper) template. To clone it and get started:
+### NB. This fork adds pug preprocessing with a few mixins to make blocks a bit nicer
+#### see routes/blog/index.html/_index.pug and the components/Nav/ folders for examples with code split into different files for template, js, and styles
+
+An experimental [Sapper](https://github.com/sveltejs/sapper) + PUG/jade template. To clone it and get started:
 
 ```bash
-npx degit sveltejs/sapper-template my-app
+npx degit alvin/sapper-template my-app
 cd my-app
 npm install # or yarn!
 npm run dev
@@ -11,9 +14,75 @@ npm run dev
 
 Open up [localhost:3000](http://localhost:3000) and start clicking around.
 
-Consult [sapper.svelte.technology](https://sapper.svelte.technology) for help getting started.
 
-*[Click here for the Rollup version of this template](https://github.com/sveltejs/sapper-template/tree/rollup)*
+### Options how to use pug
+
+In src/routes/blog/_index.pug for example of a standalone pug file that's included in an index.html Note that at last check, due to the way preloading works, hot-reloading after file changes will only happen if the corresponding index.html is re-saved.   PR's for addressing this (or tweaks to the webpack config to allow just .pug files without an index.html) are also welcome.  
+
+We use [https://github.com/kaisermann/svelte-preprocess] which means another way to use pug/jade in your .html extension templates is:
+
+`<template lang="pug">
+   p.container
+     | your pug here
+</template>
+<style type="text/css">
+   ... some styles ..
+</style>
+<script>
+   ... some js ..
+</script>
+`
+
+## PUG Mixins
+##### In the interest of syntax clarity vs. embedding literal Svelte template conditions/loops, we provide a several block mixins:
+```
+mixin each(loop)
+  | {#each #{loop}}
+  if block
+    block
+  | {/each}
+
+mixin if(condition)
+  | {#if #{condition}}
+  if block
+    block
+  | {/if}
+
+mixin else
+  | {:else}
+  if block
+    block
+
+mixin await(promise)
+  | {#await #{promise}}
+  if block
+    block
+  | {/await}
+
+mixin then(answer)
+  | {:then #{answer}}
+  if block
+    block
+
+mixin catch(error)
+  | {:catch #{error}}
+  if block
+    block
+```
+
+##### This allows the following in preprocesssed Svelte/PUG component templates
+```
+h1 Recent posts
+ul
+  +each(`posts as post`)
+    li
+      a(rel='prefetch' href!='blog/{post.slug}') { post.title }   
+```
+##### Other ideas?
+Some effort was expended trying to port native pug conditionals/loops into the Svelte preprocessing system using compileClient, etc.  However, accounting for all of Svelte's $store magic, etc might prove problematic.  Other ideas and approaches are welcomed, as are PR's with fixes/omissions to our approach here.
+
+
+Consult [sapper.svelte.technology](https://sapper.svelte.technology) for help getting started.
 
 ## Structure
 

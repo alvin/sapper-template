@@ -1,0 +1,8 @@
+svelte:head
+  title Blog
+
+h1 Recent posts
+ul
+  +each(`posts as post`)
+    li
+      a(rel='prefetch' href!='blog/{post.slug}') { post.title }

@@ -1,0 +1,8 @@
+nav
+  ul
+    li
+      a(class!='{ !segment ? "selected" : ""}' href='.') home
+    li
+      a(class!='{segment === "about" ? "selected" : ""}' href='about') about
+    li
+      a(rel='prefetch' class!='{segment && segment.startsWith("blog") ? "selected" : ""}' href='blog') blog

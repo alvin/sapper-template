@@ -21,6 +21,8 @@
     "sapper": "^0.22.1",
     "svelte": "^2.0.0",
     "svelte-loader": "^2.9.0",
-    "webpack": "^4.7.0"
+    "webpack": "^4.7.0",
+    "svelte-preprocess": "^2.3.2",
+    "pug": "^2.0.3"
   }
 }
