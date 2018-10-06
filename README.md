@@ -5,23 +5,25 @@
 
 An experimental [Sapper](https://github.com/sveltejs/sapper) + PUG/jade template. To clone it and get started:
 
-```bash
-npx degit alvin/sapper-template my-app
+```
+bash
+npx degit alvin/sapper-template-pug my-app
 cd my-app
-npm install # or yarn!
+npm install
 npm run dev
 ```
 
 Open up [localhost:3000](http://localhost:3000) and start clicking around.
 
 
-### Options how to use pug
+### Options for pug templates:
 
-In src/routes/blog/_index.pug for example of a standalone pug file that's included in an index.html Note that at last check, due to the way preloading works, hot-reloading after file changes will only happen if the corresponding index.html is re-saved.   PR's for addressing this (or tweaks to the webpack config to allow just .pug files without an index.html) are also welcome.  
+1. In src/routes/blog/_index.pug for example of a standalone pug file that's included in an index.html Note that at last check, due to the way preloading works, hot-reloading after file changes will only happen if the corresponding index.html is re-saved.   PR's for addressing this (or tweaks to the webpack config to allow just .pug files without an index.html) are also welcome.  
 
-We use [https://github.com/kaisermann/svelte-preprocess] which means another way to use pug/jade in your .html extension templates is:
+2. We use [https://github.com/kaisermann/svelte-preprocess] which means another way to use pug/jade in any .html file's template
 
-`<template lang="pug">
+```
+<template lang="pug">
    p.container
      | your pug here
 </template>
@@ -31,10 +33,10 @@ We use [https://github.com/kaisermann/svelte-preprocess] which means another way
 <script>
    ... some js ..
 </script>
-`
+```
 
 ## PUG Mixins
-##### In the interest of syntax clarity vs. embedding literal Svelte template conditions/loops, we provide a several block mixins:
+##### In the interest of syntax clarity vs. embedding literal Svelte template conditions/loops, we provide several block mixins:
 ```
 mixin each(loop)
   | {#each #{loop}}
